@@ -1,0 +1,29 @@
+
+body {
+    /* background: linear-gradient(90deg, #bdbcbc 50%, #f7f7f7 75%); */
+    background-color: rgba(130, 112, 112, 0.5);
+    background: url(../img/background_picture.jpg) no-repeat center;
+    background-size: cover;
+    
+
+}
+
+.auth-card {
+    border: 3px solid #dbd7d7;
+    border-radius: 15px;
+    box-shadow: 3px 40px 80px rgba(254, 252, 252, 0.1); 
+    padding: 120px 40px 90px;
+    background-color: rgb(79, 78, 76);
+    opacity: 0.9;
+    
+}
+
+.auth-card:hover {
+    box-shadow: 3px 40px 80px rgba(101, 101, 101, 0.5);
+    opacity: 1;
+}
+
+.icon-size{
+
+    font-size: 50px;
+}
