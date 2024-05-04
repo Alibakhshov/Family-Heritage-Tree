@@ -1,5 +1,6 @@
 asgiref==3.7.2
-Django==5.0.3
+# Django==5.0.3
+Django==4.2.11
 packaging==24.0
 pillow==10.3.0
 psycopg2==2.9.9
