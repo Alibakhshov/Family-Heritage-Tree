@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>RootsLink | Account Setting</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+   
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'plugins/select2/select2.min.css' %}">
+   <link rel="stylesheet" href="{% static 'plugins/datepicker/datepicker.min.css' %}">
+   <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+   {% include 'core/includes/loadstatic.html' %}
+
+
+</head>
+
+<body>
+
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'core/partials/header.html' %}
+        <!-- End Header -->
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            {% include 'core/partials/sidebar.html' %}
+            <!-- End Sidebar -->
+
+            <!-- Main Content -->
+            <div class="main-content d-flex flex-column flex-md-row">
+                <div class="mb-4 mb-md-0">
+                    <!-- Tasks Aside -->
+                    <div class="aside">
+                        <!-- Aside Body -->
+                        <nav class="aside-body">
+                            <h4 class="mb-3">Account Settings</h4>
+
+                            <ul class="nav flex-column">
+                                <li><a class="active" data-toggle="tab" href="#general">General</a></li>
+                                <li><a data-toggle="tab" href="#info">Info</a></li>
+                                <li><a data-toggle="tab" href="#social">Social links</a></li>
+                            </ul>
+                        </nav>
+                        <!-- End Aside Body -->
+                    </div>
+                    <!-- End Tasks Aside -->
+                 </div>
+                 <div class="container-fluid">
+                    <div class="row">
+     
+                       <div class="col-xl-12 mb-30 mb-xl-0">
+                          <!-- Card -->
+                          <div class="card h-100">
+                             <div class="card-body p-30">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade show active" id="general">
+                                        <h4 class="mb-4">Account Settings</h4>
+                                        <div id="successMessage" class="success-message" style="display: none; color: green;">
+                                            Form submitted successfully!
+                                        </div>
+                                        
+                                        <form method="post" id="profileForm" action="{% url 'edit_profile' %}" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-xl-4 col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="username" class="mb-2 font-14 bold black">User Name</label>
+                                                        <input type="text" id="username" name="username" class="theme-input-style" placeholder="{% if user.username %}{{ user.username }}{% else %}You didn't specify your username. Please enter it here{% endif %}">
+                                                        <span id="usernameError" class="error-message" style="color: red;"></span>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                        
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="email" class="mb-2 font-14 bold black">Email</label>
+                                                        <input type="email" id="email" name="email" class="theme-input-style" placeholder="{% if user.email %}{{ user.email }}{% else %}You didn't specify your email. Please enter it here{% endif %}">
+                                                        <span id="emailError" class="error-message" style="color: red;"></span>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+                                                <div class="col-xl-4 col-lg-6">
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="name" class="mb-2 font-14 bold black">Name</label>
+                                                        <input type="text" id="name" name="name" class="theme-input-style" placeholder="{% if user.first_name %}{{ user.first_name }}{% else %}You didn't specify your first name. Please enter it here{% endif %}" >
+                                                        <span id="nameError" class="error-message" style="color: red;"></span>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                        
+                                                    <!-- Form Group -->
+                                                    <div class="form-group mb-20">
+                                                        <label for="position" class="mb-2 font-14 bold black">Position</label>
+                                                        <input type="text" id="position" name="position" class="theme-input-style" placeholder="{% if user.personal_info.position %}{{ user.personal_info.position }}{% else %}You didn't specify your position. Please enter it here{% endif %}">
+                                                        <span id="positionError" class="error-message" style="color: red;"></span>
+                                                    </div>
+                                                    <!-- End Form Group -->
+                                                </div>
+                                                <div class="col-xl-4">
+                                                    <!-- Upload Avatar Section -->
+                                                    <div class="upload-avatar d-xl-flex align-items-center flex-column">
+                                                        <div>
+                                                            <div class="attach-file style--two rounded-0 align-items-end mb-3">
+                                                                {% if user.avatar %}
+                                                                <img src="{{ user.avatar.url }}" class="profile-avatar" alt="">
+                                                                {% else %}
+                                                                <img src="{% static 'img/img-placeholder.png' %}" class="profile-avatar" alt="">
+                                                                {% endif %}
+                                                                <div class="upload-button mb-20">
+                                                                    <img src="{% static 'img/svg/gallery.svg' %}" alt="" class="svg mr-2">
+                                                                    <span>Upload Photo</span>
+                                                                    <input class="file-input" type="file" id="fileUpload" name="avatar" accept="image/*">
+                                                                    <!-- Hidden input to store the current avatar path -->
+                                                                    
+                                                                    <input type="hidden" name="current_avatar" value="{% if user.avatar %}{{ user.avatar.url }}{% else %}{% endif %}">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="content">
+                                                                <h4 class="mb-2">Upload a Photo</h4>
+                                                                <p class="font-12 c4">Allowed JPG, GIF or PNG. Max size <br /> of 800kB</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="button-group mt-30 mt-xl-n5">
+                                                        <button type="submit" class="btn" style="margin-top: 15px;">Save Changes</button>
+                                                        <!-- <button type="button" class="link-btn bg-transparent ml-3 soft-pink">Cancel</button> -->
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <!--#################################################################################################################################  -->
+
+                                    <div class="tab-pane fade" id="info">
+                                        <h4 class="mb-4">Informations</h4>
+
+                                        <form id="profileFormInfo" method="post" action="{% url 'edit_profileInfo' %}">
+                                            {% csrf_token %}
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="bio" class="mb-2 font-14 bold black">Bio</label>
+                                                <textarea id="bio" name="bio" class="theme-input-style style--two" placeholder="{% if user.personal_info.bio %}{{ user.personal_info.bio }}{% else %}You didn't specify your bio text. Please enter it here{% endif %}"></textarea>
+                                                <span id="bioError" class="error-message" style="color: red;"></span>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="default-date" class="mb-2 font-14 bold black">Date Of Birth</label>
+                                                <input type="date" id="birth_date" name="birth_date" class="theme-input-style" placeholder="{% if user.personal_info.birth_date %}{{ user.personal_info.birth_date }}{% else %}You didn't specify your birth date. Please enter it here{% endif %}">
+                                                <span id="birthDateError" class="error-message" style="color: red;"></span>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="age" class="mb-2 font-14 bold black">Age</label>
+                                                <input type="text" id="age" name="age" class="theme-input-style" placeholder="{% if user.personal_info.age %}{{ user.personal_info.age }}{% else %}You didn't specify your age. Please enter it here{% endif %}">
+                                                <span id="ageError" class="error-message" style="color: red;"></span>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="phone" class="mb-2 font-14 bold black">Phone</label>
+                                                <input type="text" id="phone" name="phone_number" class="theme-input-style" placeholder="{% if user.personal_info.phone_number %}{{ user.personal_info.phone_number }}{% else %}You didn't specify your phone number. Please enter it here{% endif %}">
+                                                <span id="phoneError" class="error-message" style="color: red;"></span>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group -->
+                                            <div class="form-group mb-20">
+                                                <label for="address" class="mb-2 font-14 bold black">Address</label>
+                                                <input type="text" id="address" name="address" class="theme-input-style" placeholder="{% if user.personal_info.address %}{{ user.personal_info.address }}{% else %}You didn't specify your address. Please enter it here{% endif %}">
+                                                <span id="addressError" class="error-message" style="color: red;"></span>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <div class="button-group mt-30">
+                                                <button type="button" onclick="validateForm()" class="btn">Save Changes</button>
+                                                <!-- <button type="button" class="link-btn bg-transparent ml-3 soft-pink">Cancel</button> -->
+                                            </div>
+                                        </form>
+                                        
+                                        
+                                    </div>
+
+                                    <!--#################################################################################################################################  -->
+                                    
+                                    <div class="tab-pane fade" id="social">
+                                        <h4 class="mb-4">Social Links</h4>
+
+                                        <form id="profileFormSocial" method="post" action="{% url 'edit_profileSocial' %}">
+                                            {% csrf_token %}
+                                        
+                                            <!-- Form Group for Facebook -->
+                                            <div class="form-group mb-20">
+                                                <label for="facebook" class="mb-2 font-14 bold black">Facebook</label>
+                                                <input type="text" id="facebook" name="facebook" class="theme-input-style" placeholder="{% if personal_info.facebook %}{{ personal_info.facebook }}{% else %}You did not specify your Facebook, please do it{% endif %}">
+                                                <div id="facebookError" class="error-message" style="color: red;"></div>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group for Twitter -->
+                                            <div class="form-group mb-20">
+                                                <label for="twitter" class="mb-2 font-14 bold black">Twitter</label>
+                                                <input type="text" id="twitter" name="twitter" class="theme-input-style" placeholder="{% if personal_info.twitter %}{{ personal_info.twitter }}{% else %}You did not specify your Twitter, please do it{% endif %}">
+                                                <div id="twitterError" class="error-message" style="color: red;"></div>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group for LinkedIn -->
+                                            <div class="form-group mb-20">
+                                                <label for="linkedin" class="mb-2 font-14 bold black">LinkedIn</label>
+                                                <input type="text" id="linkedin" name="linkedin" class="theme-input-style" placeholder="{% if personal_info.linkedin %}{{ personal_info.linkedin }}{% else %}You did not specify your LinkedIn, please do it{% endif %}">
+                                                <div id="linkedinError" class="error-message" style="color: red;"></div>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <!-- Form Group for Instagram -->
+                                            <div class="form-group mb-20">
+                                                <label for="instagram" class="mb-2 font-14 bold black">Instagram</label>
+                                                <input type="text" id="instagram" name="instagram" class="theme-input-style" placeholder="{% if personal_info.instagram %}{{ personal_info.instagram }}{% else %}You did not specify your Instagram, please do it{% endif %}">
+                                                <div id="instagramError" class="error-message" style="color: red;"></div>
+                                            </div>
+                                            <!-- End Form Group -->
+                                        
+                                            <div class="button-group mt-30">
+                                                <button type="button" id="submitButton" class="btn">Save Changes</button>
+                                            </div>
+                                        </form>
+                                        
+                                    </div>
+
+                                    
+                                </div>
+                             </div>
+                          </div>
+                          <!-- End Card -->
+                       </div>
+     
+                    </div>
+                 </div>
+            </div>
+            <!-- End Main Content -->
+        </div>
+        <!-- End Main Wrapper -->
+
+        <!-- Footer -->
+        {% include 'core/partials/footer.html' %}
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+
+
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{% static 'plugins/select2/select2.min.js' %}"></script>
+    <script src="{% static 'plugins/datepicker/datepicker.min.js' %}"></script>
+    <script src="{% static 'plugins/datepicker/i18n/datepicker.en.js' %}"></script>
+    <script src="{% static 'plugins/datepicker/custom-form-datepicker.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('.language-select').select2({
+                dropdownAutoWidth:!0,
+                width:"100%"
+            });
+        });
+
+        
+    </script>
+
+    <script src="{% static 'js/accountSettingGeneral.js' %}"></script>
+    <script src="{% static 'js/accountSettingInfo.js' %}"></script>
+    <script src="{% static 'js/accountSettingSocial.js' %}"></script>
+    
+</body>
+
+</html>

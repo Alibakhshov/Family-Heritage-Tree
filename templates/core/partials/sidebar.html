@@ -1,0 +1,81 @@
+<!-- Sidebar -->
+<nav class="sidebar" data-trigger="scrollbar">
+    <!-- Sidebar Header -->
+    <div class="sidebar-header d-none d-lg-block">
+       <!-- Sidebar Toggle Pin Button -->
+       <div class="sidebar-toogle-pin">
+          <i class="icofont-tack-pin"></i>
+       </div>
+       <!-- End Sidebar Toggle Pin Button -->
+    </div>
+    <!-- End Sidebar Header -->
+
+    <!-- Sidebar Body -->
+    <div class="sidebar-body">
+      <!-- Nav -->
+      <ul class="nav">
+        <li class="nav-category">Main pages</li>
+        <li {% if request.path == '/home/' %}class="active"{% endif %}>
+            <a href="{% url 'home' %}">
+                <i class="icofont-pie-chart"></i>
+                <span class="link-title">Dashboard</span>
+            </a>
+        </li>
+        <li {% if request.path == '/tree/' %}class="active"{% endif %}>
+            <a href="{% url 'tree' %}">
+                <i class="icofont-tree-alt"></i>
+                <span class="link-title">Family Tree</span>
+            </a>
+        </li>
+        <li class="nav-category">User Profile Pages</li>
+        <li {% if request.path == '/about/' %}class="active"{% endif %}>
+            <a href="{% url 'about' %}">
+                <i class="icofont-info-circle"></i>
+                <span class="link-title">About</span>
+            </a>
+        </li>
+        <li {% if request.path == '/edit-profile/' %}class="active"{% endif %}>
+            <a href="{% url 'edit_profile' %}">
+                <i class="icofont-ui-settings"></i>
+                <span>Account Setting</span>
+            </a>
+        </li>
+        <li {% if request.path == '/gallery/' %}class="active"{% endif %}>
+            <a href="{% url 'gallery' %}">
+                <i class="icofont-image"></i>
+                <span>Gallery</span>
+            </a>
+        </li>
+        <li {% if request.path == '/timeline/' %}class="active"{% endif %}>
+            <a href="{% url 'timeline' %}">
+                <i class="icofont-clock-time"></i>
+                <span>Timeline</span>
+            </a>
+        </li>
+        <li {% if request.path == '/roots-list/' %}class="active"{% endif %}>
+            <a href="{% url 'roots_grid' %}">
+                <i class="icofont-contacts"></i>
+                <span>Roots</span>
+            </a>
+        </li>
+        <li {% if request.path == '/quiz/' %}class="active"{% endif %}>
+            <a href="{% url 'quiz' %}">
+                <i class="icofont-brain-alt"></i>
+                <span>Knowledge check</span>
+            </a>
+        </li>
+
+     
+        <li>
+            <a href="{% url 'logout' %}">
+                <i class="icofont-logout"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+     </ul>
+     
+       <!-- End Nav -->
+
+       
+ </nav>
+ <!-- End Sidebar -->

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>Family Heritage Tree | Login</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- ======= Custom STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'css/customAuth.css' %}">
+    <!-- ======= END Custom STYLES ======= -->
+
+    {% include 'core/includes/loadstatic.html' %}
+
+</head>
+
+<body>
+
+    <div class="mn-vh-100 d-flex align-items-center">
+        <div class="container">
+            <!-- Card -->
+            <div class=" justify-content-center auth-card">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-9">
+                        <!-- Message that email sent successfully -->
+                        <h4 class="d-flex justify-content-center font-30 mb-3" style="color: white;">Email confirmed</h4>
+                        <p class="d-flex justify-content-center font-16 mb-3" style="color: rgb(157, 255, 0);">You have successfully confirmed your email. Now you can <a href="{% url 'login' %}" style=" margin-left: 5px;">login</a></p>
+
+                        
+                    </div>                                    
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+
+    {% include 'core/partials/footer.html' %}
+
+    
+
+    
+</body>
+
+</html>

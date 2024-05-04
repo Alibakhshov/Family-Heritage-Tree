@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RootsLink | Family Tree</title>
+    <link rel="shortcut icon" href="{% static 'img/logo (ai1).png' %}">
+
+    <!-- Include the FamilyTree.js file -->
+    <script src="{% static 'js/familytree.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+    
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'plugins/apex/apexcharts.css' %}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- ======= END MAIN STYLES ======= -->
+    
+</head>
+<body>
+    
+
+    <div class="wrapper">
+        {% include 'core/partials/header.html' %} <!-- Header -->
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            {% include 'core/partials/sidebar.html' %}
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-8">
+                            <!-- Container for the family tree -->
+                            
+                            <div style="width:99%; height:1100px;" id="tree"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- End Main wrapper -->
+        {% include 'core/partials/footer.html' %}
+    </div> <!-- End Wrapper -->
+    
+    
+
+
+    
+
+    <!-- Script to initialize the family tree -->
+    <script>
+        let family = new FamilyTree(document.getElementById("tree"), {
+        mode: 'light',
+        undoRedoStorageName: 'myStorageName',
+        nodeTreeMenu: true,
+        mouseScrool: FamilyTree.none,
+        nodeBinding: {
+            field_0: "name",
+            field_1: "surname",
+            field_2: "birthDate (eg. 2002-05-20)",
+            field_3: "email",
+            field_4: "gender",
+            field_5: "phone",
+            field_6: "special_event",
+            field_7: "other_comments",
+            
+            
+            
+            
+        },
+
+        menu: {
+            pdf: { text: "Export PDF" },
+            png: { text: "Export PNG" },
+            svg: { text: "Export SVG" },
+            csv: { text: "Export CSV" },
+            json: { text: "Export JSON" }
+        },
+        nodeMenu: {
+            pdf: { text: "Export PDF" },
+            png: { text: "Export PNG" },
+            svg: { text: "Export SVG" }
+        },
+    });
+
+    family.onUpdated(function(args) {
+        // Get the current nodes and links data
+        var nodes = family.config.nodes;
+        var clinks = family.config.clinks;
+
+        console.log("Nodes:", nodes);
+        console.log("Links:", clinks);
+
+        // Prepare data to be sent to the backend
+        var postData = {
+            nodes: nodes,
+            clinks: clinks
+        };
+
+        // Post config data to the backend
+        $.ajax({
+            url: "{% url 'tree_save' %}",
+            type: "POST",
+            data: JSON.stringify(postData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function(response) {
+                console.log("Data posted to the backend successfully.");
+                console.log("Response:", response);
+                console.log("Nodes:", nodes);
+                console.log("Links:", clinks);
+                console.log("PostData:", postData);
+                
+            },
+            error: function(xhr, errmsg, err) {
+                console.log("Error occurred while posting data to the backend:", errmsg);
+            }
+        });
+    });
+
+    // Make AJAX request to fetch data from backend
+    $.ajax({
+        url: "{% url 'tree_data' %}",  
+        type: "GET",
+        dataType: "json",
+        success: function(response) {
+            // Assuming response contains 'nodes' and 'clinks' data
+            var nodes = JSON.parse(response.nodes);
+            var clinks = JSON.parse(response.clinks);
+
+            // Populate data into front-end using family.load()
+            var familyData = [];
+
+            // Populate nodes
+            nodes.forEach(function(node) {
+                var data = {
+                    id: node.pk,  
+                    pids: node.fields.pids,
+                    mid: node.fields.mid,
+                    fid: node.fields.fid,
+                    name: node.fields.name,
+                    gender: node.fields.gender,
+                    surname: node.fields.surname,
+                    phone: node.fields.phone,
+                    birthDate: node.fields.birthDate,
+                    email: node.fields.email,
+                    special_event: node.fields.special_event,
+                };
+                familyData.push(data);
+            });
+
+            // Populate clinks
+            clinks.forEach(function(clink) {
+                var data = {
+                    id: clink.pk,  
+                    mid: clink.fields.source_node,
+                    fid: clink.fields.target_node,
+                    name: "",  
+                    gender: "",
+                    surname: "",
+                    phone: "",
+                    birthDate: "",
+                    email: "",
+                    special_event: "",
+
+
+                    
+                };
+                familyData.push(data);
+            });
+
+            // Load data into family
+            family.load(familyData);
+
+            console.log("Data loaded into front-end:", familyData);
+        },
+        error: function(xhr, errmsg, err) {
+            console.log("Error occurred while fetching data from backend:", errmsg);
+        }
+    });
+
+
+    </script>
+     <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+   <script src="{% static 'js/jquery.min.js' %}"></script>
+   <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+   <script src="{% static 'js/script.js' %}"></script>
+   <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+   <script src="{% static 'plugins/apex/apexcharts.min.js' %}"></script>
+   <script src="{% static 'plugins/apex/custom-apexcharts.js' %}"></script>
+   <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    
+</body>
+</html>

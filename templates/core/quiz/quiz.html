@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+   <!-- Page Title -->
+   <title>RootsLink | Knowledge check</title>
+
+   <!-- Meta Data -->
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="keywords" content="">
+
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="{% static 'img/logo (ai1).png' %}">
+
+   <!-- Web Fonts -->
+   <!-- Web Fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+   <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'fonts/icofont/icofont.min.css' %}">
+   <link rel="stylesheet" href="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+   <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+   
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+   <link href="{% static 'plugins/jquery-smartwizard/smart_wizard_all.min.css' %}" rel="stylesheet" type="text/css" />
+   <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+   <!-- ======= MAIN STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <!-- ======= END MAIN STYLES ======= -->
+
+</head>
+
+<body>
+
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'core/partials/header.html' %}
+        <!-- End Header -->
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            {% include 'core/partials/sidebar.html' %}
+            <!-- End Sidebar -->
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-30">
+                                <!-- Form -->
+                                <form method="post" action="{% url 'quiz' %}">
+                                    {% csrf_token %}
+                                    <h4 class="font-20 mb-30 mt-30 mx-4">Quiz Wizard</h4>
+                                    <div id="smartwizard">
+                                        <ul class="nav">
+                                            <li>
+                                                <a class="nav-link" href="#step-1">
+                                                    Quiz Questions
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="nav-link" href="#step-2">
+                                                    Review Answers
+                                                </a>
+                                            </li>
+                                            
+                                        </ul>
+                                
+                                        <div class="tab-content">
+                                            <div id="step-1" class="tab-pane" role="tabpanel">
+                                                <div class="card-body">
+                                                    <h4 class="font-20 mb-20">Questions:</h4>
+                                                    {% for question in questions %}
+                                                        <div style="background-color: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                                                            <label style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">{{ forloop.count }} {{ question.question_text }}</label>
+                                                            <div style="margin-left: 20px;">
+                                                                <input type="radio" id="option1_{{question.id}}" name="{{ question.id }}" value="{{ question.option_one }}"> {{ question.option_one }}<br>
+                                                                <input type="radio" id="option2_{{question.id}}" name="{{ question.id }}" value="{{ question.option_two }}"> {{ question.option_two }}<br>
+                                                                <input type="radio" id="option3_{{question.id}}" name="{{ question.id }}" value="{{ question.option_three }}"> {{ question.option_three }}<br>
+                                                                <input type="radio" id="option4_{{question.id}}" name="{{ question.id }}" value="{{ question.option_four }}"> {{ question.option_four }}<br>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+
+                                                    <!-- <button type="submit" name="review" class="btn btn-primary">Review Answers</button> -->
+                                                </div>
+                                            </div>
+                                            <div id="step-2" class="tab-pane" role="tabpanel">
+                                                <div class="card-body">
+                                                    <h4 class="font-20 mb-20">Answers</h4>
+                                                    <p class="font-14 mb-20">Please review your answers before submitting</p>
+                                                    {% for question in questions %}
+                                                    <div class="form-group" style="background-color: #f9f9f9; border-radius: 10px; padding: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-bottom: 20px;">
+                                                        <label class="font-14 bold mb-2" style="font-size: 14px; font-weight: bold; margin-bottom: 10px;">{{ question.question_text }}</label>
+                                                        <p class="selected-answer" id="answer{{ question.id }}"></p>
+                                                    </div>
+                                                    {% endfor %}
+                                                    <button type="submit" name="final_submit" class="btn btn-success">Submit Answers</button>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <!-- End Form -->
+                            </div>
+
+                           
+
+                            
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main Content -->
+        </div>
+        <!-- End Main Wrapper -->
+
+        <!-- Footer -->
+        {% include 'core/partials/footer.html' %}
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+   <script src="{% static 'plugins/jquery-smartwizard/jquery.smartWizard.min.js' %}"></script>
+   <script src="{% static 'plugins/jquery-smartwizard/custom-smartWizard.js' %}"></script>
+   <script src="{% static 'plugins/jquery.steps/jquery.steps.min.js' %}"></script>
+   <script src="{% static 'plugins/jquery.steps/custom-jquery-step.js' %}"></script>
+   <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+   <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('form');
+    form.addEventListener('change', function() {
+        document.querySelectorAll('input[type="radio"]:checked').forEach((radio) => {
+            const questionId = radio.name;
+            const selectedAnswer = radio.value;
+            const answerDisplay = document.getElementById(`answer${questionId}`);
+            if (answerDisplay) {
+                answerDisplay.textContent = `Selected: ${selectedAnswer}`;
+            }
+        });
+    });
+});
+   </script>
+</body>
+
+</html>

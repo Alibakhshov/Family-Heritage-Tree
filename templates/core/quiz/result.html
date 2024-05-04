@@ -1,0 +1,166 @@
+<h2>Quiz Results</h2>
+<p>Correct Answers: {{ correct }}</p>
+<p>Wrong Answers: {{ wrong }}</p>
+<p>Total Questions: {{ total }}</p>
+<p>Score: {{ score }}/{{ total }}</p>
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+   <!-- Page Title -->
+   <title>RootsLink | Knowledge check</title>
+
+   <!-- Meta Data -->
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="keywords" content="">
+
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="{% static 'img/logo (ai1).png' %}">
+
+   <!-- Web Fonts -->
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+   <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'fonts/icofont/icofont.min.css' %}">
+   <link rel="stylesheet" href="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+   <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+   
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+   <link href="{% static 'plugins/jquery-smartwizard/smart_wizard_all.min.css' %}" rel="stylesheet" type="text/css" />
+   <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+   <!-- ======= MAIN STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <!-- ======= END MAIN STYLES ======= -->
+
+</head>
+
+<body>
+
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'core/partials/header.html' %}
+        <!-- End Header -->
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            {% include 'core/partials/sidebar.html' %}
+            <!-- End Sidebar -->
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card mb-30">
+                                <!-- Form -->
+                                <form method="post" action="{% url 'quiz' %}">
+                                    {% csrf_token %}
+                                    <h4 class="font-20 mb-30 mt-30 mx-4">Quiz</h4>
+                                    <div id="smartwizard">
+                                        <ul class="nav">
+                                            <li>
+                                                <a class="nav-link" href="#step-1">
+                                                    Answers
+                                                </a>
+                                            </li>
+                                            
+                                            
+                                        </ul>
+                                
+                                        <div class="tab-content">
+                                            <div id="step-1" class="tab-pane" role="tabpanel">
+                                                <div class="card-body">
+                                                    <div id="step-1" class="tab-pane" role="tabpanel">
+                                                        <div class="step-done">
+                                                            <span class="btn-circle done"><i class="icofont-check"></i></span>
+                                                            <h2 class="text_color font-30 mb-20">Completed Successfully!</h2>
+                                                            <p style="margin-bottom: 20px;">Thank you for taking the quiz.</p>
+                                                            <h2 class="text_color font-30 mb-20">Your Results:</h2>
+                                                            <p>Correct Answers: {{ correct }}</p>
+                                                            <p>Wrong Answers: {{ wrong }}</p>
+                                                            <p>Total Questions: {{ total }}</p>
+                                                            <p>Score: {{ score }}/{{ total }}</p>
+                                                        
+                                                            <div class="correct-answers mt-30">
+                                                                <h3 class="text_color font-20 mb-20">Correct Answers:</h3>
+                                                                <div class="list-group">
+                                                                    {% for question in questions %}
+                                                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                                                        <div class="d-flex w-100 justify-content-between">
+                                                                            <h5 class="mb-1 text-primary">Question: {{ question.question_text }}</h5>
+                                                                        </div>
+                                                                        <p class="mb-1"><strong>Correct Answer:</strong> {{ question.correct_answer }}</p>
+                                                                    </a>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        
+                                                            <div class="btn-box mt-30">
+                                                                <a href="{% url 'quiz' %}" class="theme-btn">Back to Quiz</a>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                </form>
+                                
+                                <!-- End Form -->
+                            </div>
+
+                           
+
+                            
+                                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main Content -->
+        </div>
+        <!-- End Main Wrapper -->
+
+        <!-- Footer -->
+        {% include 'core/partials/footer.html' %}
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+   <script src="{% static 'plugins/jquery-smartwizard/jquery.smartWizard.min.js' %}"></script>
+   <script src="{% static 'plugins/jquery-smartwizard/custom-smartWizard.js' %}"></script>
+   <script src="{% static 'plugins/jquery.steps/jquery.steps.min.js' %}"></script>
+   <script src="{% static 'plugins/jquery.steps/custom-jquery-step.js' %}"></script>
+   <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+</body>
+
+</html>

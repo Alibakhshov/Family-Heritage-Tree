@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+   <!-- Page Title -->
+   <title>RootsLink | Gallery</title>
+
+   <!-- Meta Data -->
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta http-equiv="content-type" content="text/html; charset=utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="description" content="">
+   <meta name="keywords" content="">
+
+   
+   <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+   <link rel="stylesheet" href="{% static 'plugins/swiper/swiper-bundle.min.css' %}">
+   <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+   {% include 'core/includes/loadstatic.html' %}
+
+</head>
+
+<body>
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'core/partials/header.html' %}
+        <!-- End Header -->
+
+    <!-- Main Wrapper -->
+<div class="main-wrapper">
+    <!-- Sidebar -->
+    {% include 'core/partials/sidebar.html' %}
+    <!-- End Sidebar -->
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="p-30 pb-4 d-flex justify-content-between">
+                    <h4 class="font-20">Gallery</h4>
+
+                    <div class="d-flex align-items-center">
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-prev page-prev next8 position-static"></div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination s-pagination8 position-static"></div>
+                        <div class="swiper-button-next page-next prev8 position-static"></div>
+                    </div>
+                </div>
+
+                <!-- Swiper for Gallery Top -->
+                <div class="swiper-container gallery-top" style="height: 1000px;">
+                    <div class="swiper-wrapper">
+                        <!-- Using <img> tag instead of background image -->
+                        {% for image in gallery_images %}
+                        <div class="swiper-slide">
+                            <form method="post" action="{% url 'delete_image' image.id %}" style="position: absolute; top: 0; right: 20px;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                            <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <!-- Swiper for Gallery Thumbs -->
+                <div class="swiper-container gallery-thumbs">
+                    <div class="swiper-wrapper">
+                        <!-- Using <img> tag instead of background image -->
+                        {% for image in gallery_images %}
+                        <div class="swiper-slide">
+                            <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Upload Form -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="input-group mb-3" style="margin-top: 10px;">
+                    <input type="file" class="form-control" id="inputGroupFile02" name="gallery_image" accept="image/*">
+                    <!-- <label class="input-group-text" for="inputGroupFile02">Choose file</label> -->
+                </div>
+                <button type="submit" class="btn btn-primary">Upload Image</button>
+            </form>
+            <!-- End Image Upload Form -->
+        </div>
+    </div>
+    <!-- End Main Content -->
+</div>
+<!-- End Main Wrapper -->
+
+
+        <!-- Footer -->
+         {% include 'core/partials/footer.html' %}
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+    
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{% static 'plugins/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/swiper/swiper.js' %}"></script>
+   <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+</body>
+
+</html>

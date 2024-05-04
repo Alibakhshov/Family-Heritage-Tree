@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>RootsLink | Timeline</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/logo (ai1).png' %}">
+
+    <!-- Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- ======= END MAIN STYLES ======= -->
+
+</head>
+
+<body>
+
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+
+    <!-- Wrapper -->
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'core/partials/header.html' %}
+        <!-- End Header -->
+
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            {% include 'core/partials/sidebar.html' %}
+            <!-- End Sidebar -->
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="container-fluid">
+
+                    <div class="card pb-2">
+                        <div class="p-4">
+                            <div class="row">
+                                <div class="col-xl-12 mb-40 d-flex justify-content-between align-items-center">
+                                    <h3 class="mb-3">Important dates</h3>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTimelineModal">
+                                        <img src="{% static 'img/svg/plus.svg' %}" alt="Add Timeline" width="20" height="20">
+                                    </button>
+                                </div>
+                                
+                            
+                                <div class="col-xl-12">
+                                    <!-- Timeline Wrap -->
+                                    <div id="timeline-wrap">
+                                        <ul class="timeline">
+                                            {% for timeline in timelines %}
+                                            <li class="event" data-date="{{ timeline.date }}">
+                                                <span>{{ timeline.time|time:"P" }}</span> <!-- Format time -->
+                                                <h4>{{ timeline.event_title }}</h4>
+                                                <p>{{ timeline.event_description }}</p>
+                                                <!-- deleting each even -->
+                                                <!-- Delete form -->
+                                                <form action="{% url 'delete_timeline' timeline.id %}" method="post" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <button type="submit" class="btn btn-sm" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
+                                                        <img src="{% static 'img/svg/delete.svg' %}" alt="Delete" width="20" height="20">
+                                                    </button>
+                                                </form>
+
+                                                <!-- Edit form -->
+                                                
+                                                <!-- <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#editTimelineModal" onclick="document.getElementById('edit_event_title').value = '{{ timeline.event_title }}'; document.getElementById('edit_event_description').value = '{{ timeline.event_description }}'; document.getElementById('edit_date').value = '{{ timeline.date }}'; document.getElementById('edit_time').value = '{{ timeline.time }}';">
+                                                    <img src="{% static 'img/svg/edit.svg' %}" alt="Edit" width="20" height="20">
+                                                </button> -->
+
+                                                <button type="button" class="btn btn-primary edit-timeline-btn" onclick="openEditModal('{{ timeline.id }}')" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
+                                                    <img src="{% static 'img/svg/c-edit.svg' %}" alt="Edit" width="20" height="20">
+                                                </button>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- End Timeline Wrap -->
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Main Content -->
+        </div>
+        <!-- End Main Wrapper -->
+
+        <!-- Footer -->
+        {% include 'core/partials/footer.html' %}
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+    <script src="{% static 'plugins/toastr/toastr.js' %}"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+    <!-- Script for initializing the modal and handling edit -->
+    <script src="{% static 'js/customTimeline.js' %}"></script>
+    
+</body>
+
+</html>
+
+<!-- Modal for adding new timeline record -->
+<div class="modal fade" id="addTimelineModal" tabindex="-1" role="dialog" aria-labelledby="addTimelineModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addTimelineModalLabel">Add Timeline Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'add_timeline' %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2">Event Title</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/user3.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="text" name="event_title" class="form-control pl-1" placeholder="Event Title" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2">Event Description</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/mail3.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <textarea name="event_description" class="form-control pl-1" placeholder="Event Description" required></textarea>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-row mb-20">
+                        <label class="font-14 bold mb-2">Date</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/calender.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="date" name="date" class="form-control pl-1" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-row mb-20">
+                        <label class="font-14 bold mb-2">Time</label>
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/watch2.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="time" name="time" class="form-control pl-1" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal for editing existing timeline record -->
+<div class="modal fade" id="editTimelineModal" tabindex="-1" role="dialog" aria-labelledby="editTimelineModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editTimelineModalLabel">Edit Timeline Record</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editTimelineForm"  method="post" onsubmit="submitEditForm(event)">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2">Event Title</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/user3.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="text" id="edit_event_title" name="event_title" class="form-control pl-1" placeholder="Event Title" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2">Event Description</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/mail3.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <textarea id="edit_event_description" name="event_description" class="form-control pl-1" placeholder="Event Description" required></textarea>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-row mb-20">
+                        <label class="font-14 bold mb-2">Date</label>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/calender.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="date" id="edit_date" name="date" class="form-control pl-1" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Form Group -->
+                    <div class="form-row mb-20">
+                        <label class="font-14 bold mb-2">Time</label>
+                        
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <img src="{% static 'img/svg/watch2.svg' %}" alt="" class="svg">
+                                </div>
+                            </div>
+                            <input type="time" id="edit_time" name="time" class="form-control pl-1" required>
+                        </div>
+                    </div>
+                    <!-- End Form Group -->
+
+                    <!-- Hidden input field for timeline_id -->
+                    <input type="hidden" id="edit_timeline_id" name="timeline_id" value="{{ timeline.id }}">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

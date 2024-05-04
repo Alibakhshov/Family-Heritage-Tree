@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>Family Heritage Tree | Login</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- ======= Custom STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'css/customAuth.css' %}">
+    <!-- ======= END Custom STYLES ======= -->
+
+    {% include 'core/includes/loadstatic.html' %}
+
+</head>
+
+<body>
+
+    <div class="mn-vh-100 d-flex align-items-center">
+        <div class="container">
+            <!-- Card -->
+            <div class=" justify-content-center auth-card">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8 col-lg-9">
+                        <h4 class="d-flex justify-content-center font-30 mb-3" style="color: white;">Welcome To RootsLink</h4>
+                        <p class="d-flex justify-content-center font-16" style="color: white;">Please login to your account</p>
+                        <form id="loginForm" method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+
+                            {% if form.non_field_errors %}
+                                <div class="errors mb-3" style="color: red;">
+                                    {% for error in form.non_field_errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <!-- Form Group -->
+                            <div class="form-group mb-20">
+                                <label for="id_username" class="mb-2 font-16 bold black" style="color: white;">Username</label>
+                                <input type="text" id="id_username" name="username" class="theme-input-style" placeholder="Username">
+                                <div id="username_error"  style="color: red;"></div>
+                            </div>
+                            <!-- End Form Group -->
+                        
+                            <!-- Form Group -->
+                            <div class="form-group mb-20">
+                                <label for="id_password" class="mb-2 font-16 bold black" style="color: white;">Password</label>
+                                <input type="password" id="id_password" name="password" class="theme-input-style" placeholder="********">
+                                <div id="password_error" style="color: red;"></div>
+                            </div>
+                            <!-- End Form Group -->
+                        
+                            <div class="d-flex justify-content-between mb-20">
+                                <div class="d-flex align-items-center">
+                                    <!-- Custom Checkbox -->
+                                    <label class="custom-checkbox position-relative mr-2">
+                                        <input type="checkbox" id="id_remember_me" name="remember_me">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <!-- End Custom Checkbox -->
+                                    <label for="id_remember_me" class="font-14" style="color: white;">Remember Me</label>
+                                </div>
+                                <a href="{% url 'password_reset_request' %}" class="font-14 text_color" style="color: white;">Forgot Password?</a>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <button id="loginButton" type="button" class="btn long mr-20">Log In</button>
+                                <span class="font-14 d-block" style="color: white;">If you don't have an account, please <a href="{% url 'register' %}" class="bold">Sign Up</a></span>
+                            </div>
+                        </form>
+                    </div>                                    
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+
+    {% include 'core/partials/footer.html' %}
+
+    <script src="{% static 'js/customLogin.js' %}"></script>
+
+
+    
+
+    
+</body>
+
+</html>

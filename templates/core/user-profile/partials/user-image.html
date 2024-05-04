@@ -1,0 +1,67 @@
+{% load static %}
+
+
+<div class="card">
+    <!-- User Profile Nav -->
+    <div class="user-profile-nav d-flex justify-content-xl-between align-items-xl-center flex-column flex-xl-row">
+        <!-- Profile Info -->
+        <div class="profile-info d-flex align-items-center">
+            <div class="profile-pic mr-3">
+                {% if request.user.avatar %}
+                    <img src="{{ request.user.avatar.url }}" alt="" class="svg mr-2">
+                {% else %}
+                    <img src="{% static 'img/default_avatar.png' %}" alt="Default Image" class="svg mr-2">
+                {% endif %}
+
+                
+            </div>
+
+            <div>
+                <h3>{{ personal_info.user.username }}</h3>
+                <p class="font-14"><i>{{ personal_info.user.email }}</i></p>
+            </div>
+            
+        </div>
+        <!-- End Profile Info -->
+
+        <div class="d-flex align-items-center mt-3 mt-xl-0">
+            <ul class="nav profile-nav-tabs">
+                
+                <li>
+                    <a class="p_nav-link has-before active" href="{% url 'about' %}">About</a>
+                </li>
+                <li>
+                    <a class="p_nav-link" href="{% url 'gallery' %}">Gallery</a>
+                </li>
+                <li>
+                    <a class="p_nav-link has-before" href="{% url 'timeline' %}">Timeline</a>
+                </li>
+                <li>
+                    <a class="p_nav-link has-before" href="{% url 'roots_list' %}">Roots</a>
+                </li>
+                <li>
+                    <a class="p_nav-link has-before" href="{% url 'quiz' %}">Knowledge check</a>
+                </li>
+            </ul>
+
+            <div class="px-3">
+                <!-- Dropdown Button -->
+                <div class="dropdown-button">
+                    <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
+                    <div class="menu-icon style--two w-auto justify-content-center mr-0">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+                    <a href="{% url 'home' %}">User Dashboard</a>
+                    </div>
+                </div>
+                <!-- End Dropdown Button -->
+            </div>
+        </div>
+
+    </div>
+    <!-- End User Profile Nav -->

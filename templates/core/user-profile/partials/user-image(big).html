@@ -1,0 +1,30 @@
+{% load static %}
+<div class="card">
+    <!-- User Profile Image -->
+    <div class="user-profile-img">
+        <div class="cover-img">
+            {% if personal_info.background_image %}
+            <img src="{{ personal_info.background_image.url }}" class="w-100" alt="">
+            {% else %}
+            <img src="{% static 'img/background_image1.jpg' %}" class="w-100" alt="">
+            {% endif %}
+            <!-- Upload Photo -->
+            <form method="post" enctype="multipart/form-data" id="uploadForm">
+                {% csrf_token %}
+                <div class="upload-button">
+                    <img src="{% static 'img/svg/gallery.svg' %}" alt="" class="svg mr-2">
+                    <span>Upload new background photo</span>
+                    <input class="file-input" type="file" id="fileUpload3" name="background_image" accept="image/*">
+                </div>
+                <!-- End Upload Photo -->
+            </form>
+        </div>
+    </div>
+    <!-- End User Profile Image -->
+</div>
+
+<script>
+    document.getElementById("fileUpload3").addEventListener("change", function() {
+        document.getElementById("uploadForm").submit(); // Automatically submit the form when a file is selected
+    });
+</script>
