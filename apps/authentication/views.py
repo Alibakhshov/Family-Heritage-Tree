@@ -17,6 +17,8 @@ from django.utils.html import strip_tags
 
 logger = logging.getLogger(__name__)
 
+################################################## LOGIN VIEWS ##################################################
+
 # Function to handle user login
 def user_login(request):
     try:
@@ -34,6 +36,9 @@ def user_login(request):
         return render(request, 'authentication/signIn/signIn.html', {'form': form})
     except Exception as e:
         logger.exception("An error occurred in user_login: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')
+
+################################################## LOGOUT VIEWS ##################################################
 
 # Function to handle user logout
 def user_logout(request):
@@ -42,6 +47,9 @@ def user_logout(request):
         return redirect('login')
     except Exception as e:
         logger.exception("An error occurred in user_logout: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')
+
+################################################## REGISTRATION VIEWS ##################################################
 
 # Function to handle user registration
 def user_register(request):
@@ -76,9 +84,15 @@ def user_register(request):
         return render(request, 'authentication/signUp/signup.html', {'form': form})
     except Exception as e:
         logger.exception("An error occurred in user_register: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')
 
 def registration_confirmation(request):
-    return render(request, 'authentication/signUp/email_sent.html')
+    try:
+        return render(request, 'authentication/signUp/email_sent.html')
+    except Exception as e:
+        logger.exception("An error occurred in registration_confirmation: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')
+    
 
 def confirm_email(request, uidb64, token):
     try:
@@ -97,6 +111,9 @@ def confirm_email(request, uidb64, token):
             return render(request, 'authentication/signUp/email_not_confirmed.html')
     except Exception as e:
         logger.exception("An error occurred in confirm_email: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')
+    
+################################################## PASSWORD RESET VIEWS ##################################################
 
 def password_reset_request(request):
     try:
