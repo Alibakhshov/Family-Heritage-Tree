@@ -73,39 +73,33 @@
                                 <div class="col-xl-12">
                                     <!-- Timeline Wrap -->
                                     <div id="timeline-wrap">
+                                        {% if timelines %}
                                         <ul class="timeline">
                                             {% for timeline in timelines %}
-                                            <li class="event" data-date="{{ timeline.date }}">
-                                                <span>{{ timeline.time|time:"P" }}</span> <!-- Format time -->
-                                                <h4>{{ timeline.event_title }}</h4>
-                                                <p>{{ timeline.event_description }}</p>
-                                                <!-- deleting each even -->
-                                                <!-- Delete form -->
-                                                <form action="{% url 'delete_timeline' timeline.id %}" method="post" class="d-inline">
-                                                    {% csrf_token %}
-                                                    <button type="submit" class="btn btn-sm" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
-                                                        <img src="{% static 'img/svg/delete.svg' %}" alt="Delete" width="20" height="20">
+                                                <li class="event" data-date="{{ timeline.date }}">
+                                                    <span>{{ timeline.time|time:"P" }}</span> <!-- Format time -->
+                                                    <h4>{{ timeline.event_title }}</h4>
+                                                    <p>{{ timeline.event_description }}</p>
+                                                    <!-- deleting each event -->
+                                                    <!-- Delete form -->
+                                                    <form action="{% url 'delete_timeline' timeline.id %}" method="post" class="d-inline">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-sm" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
+                                                            <img src="{% static 'img/svg/delete.svg' %}" alt="Delete" width="20" height="20">
+                                                        </button>
+                                                    </form>
+
+                                                    <!-- Edit form -->
+                                                    <button type="button" class="btn btn-primary edit-timeline-btn" onclick="openEditModal('{{ timeline.id }}')" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
+                                                        <img src="{% static 'img/svg/c-edit.svg' %}" alt="Edit" width="20" height="20">
                                                     </button>
-                                                </form>
-
-                                                <!-- Edit form -->
-                                                
-                                                <!-- <button type="button" class="btn btn-sm" data-toggle="modal" data-target="#editTimelineModal" onclick="document.getElementById('edit_event_title').value = '{{ timeline.event_title }}'; document.getElementById('edit_event_description').value = '{{ timeline.event_description }}'; document.getElementById('edit_date').value = '{{ timeline.date }}'; document.getElementById('edit_time').value = '{{ timeline.time }}';">
-                                                    <img src="{% static 'img/svg/edit.svg' %}" alt="Edit" width="20" height="20">
-                                                </button> -->
-
-                                                <button type="button" class="btn btn-primary edit-timeline-btn" onclick="openEditModal('{{ timeline.id }}')" style="background-color: transparent; border: none; transition: filter 0.3s;" onmouseover="this.style.filter='brightness(50%)'" onmouseout="this.style.filter='brightness(100%)'">
-                                                    <img src="{% static 'img/svg/c-edit.svg' %}" alt="Edit" width="20" height="20">
-                                                </button>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            </li>
+                                                </li>
                                             {% endfor %}
                                         </ul>
+                                    {% else %}
+                                        <div>Please add timeline by clicking the plus button</div>
+                                    {% endif %}
+
                                     </div>
                                     <!-- End Timeline Wrap -->
                                 </div>
