@@ -54,7 +54,7 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = ['family-heritage-tree.onrender.com', 'kooh.online', 'www.kooh.online', 'https://family-heritage-tree-production.up.railway.app/', 'family-heritage-tree-production.up.railway.app', 'www.family-heritage-tree-production.up.railway.app', '127.0.0.1']
@@ -92,7 +92,7 @@ ROOT_URLCONF = 'treeHeritage.urls'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

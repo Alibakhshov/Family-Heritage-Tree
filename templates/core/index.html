@@ -14,7 +14,7 @@
    <meta name="keywords" content="">
 
    <!-- Favicon -->
-   <link rel="shortcut icon" href="{% static 'img/logo (ai1).png' %}">
+   <link rel="shortcut icon" href="{% static 'img/logo (ai).png' %}">
 
    <!-- Web Fonts -->
    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
@@ -145,8 +145,8 @@
                    <div class="col-xl-4 col-lg-4 col-md-12">
                      <!-- Card -->
                      <div class="card mb-30">
-                         <div class="card-body text-center  mb-xl-0">
-                             <div class="title-content">
+                         <div class="card-body mb-xl-0">
+                             <div class="title-content ">
                                  
                                  {% if total_members %}
                                  <h4 class="mb-2">Distribution of gender (Percent)</h4>
@@ -154,27 +154,17 @@
                                  <h4 class="mb-2">No family members yet <a href="{% url 'tree' %}">added.</a></h4>
                                  {% endif %}
                              </div>
-                             <div id="gender_pie_chart" 
+                             <div id="gender_pie_chart" class="d-flex flex-column align-items-start" 
                                  data-total-male="{{ total_male }}"
                                  data-total-female="{{ total_female }}"
                                  data-total-members="{{ total_members }}">
-                                 
-                             </div>
+                              </div>
+                              
+
                          </div>
                      </div>
                      <!-- End Card -->
                  </div>
-                 
-
-                 
-                
-
-                 
-
-                
-                 
-                  
-                  
 
                   <div class="col-xl-6 col-lg-12" >
                      <div class="row">
