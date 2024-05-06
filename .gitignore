@@ -4,8 +4,7 @@ venv/
 env
 .env
 .env/
-media/
-media
+
 *.pyc
 *.pyo
 *.pyd
