@@ -2,8 +2,9 @@ from django.db import models
 from apps.authentication.models import CustomUser
 from django.utils import timezone
 from datetime import datetime, date
-
 from datetime import datetime
+
+################################################## PERSONAL INFO MODEL ##################################################
 
 class PersonalInfo(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='personal_info')
@@ -44,6 +45,8 @@ class PersonalInfo(models.Model):
 
     def __str__(self):
         return self.user.username
+    
+################################################## GALLERY IMAGE MODEL ##################################################
 
 class GalleryImage(models.Model):
     image = models.ImageField(upload_to='gallery_images/')
@@ -51,6 +54,8 @@ class GalleryImage(models.Model):
     
     def __str__(self):
         return self.user.email
+    
+################################################## TIMELINE MODEL ##################################################
 
 class Timeline(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='timeline')
@@ -60,12 +65,13 @@ class Timeline(models.Model):
     date = models.DateField()
     time = models.TimeField()
 
-
     def __str__(self):
         return self.event_title
-
+    
+################################################## QUESTION MODEL ##################################################
 
 class Question(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='questions', null=True, blank=True)
     question_text = models.TextField()
     option_one = models.CharField(max_length=200)
     option_two = models.CharField(max_length=200)
@@ -77,7 +83,7 @@ class Question(models.Model):
         return self.question_text
 
 class QuizResult(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Link to the user
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE) 
     score = models.IntegerField(default=0)
     total_questions = models.IntegerField(default=0)
     correct_answers = models.IntegerField(default=0)

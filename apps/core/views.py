@@ -299,11 +299,16 @@ def get_timeline(request, timeline_id):
 ############################################## ROOTS VIEWS ###############################################
 
 from apps.famTree.models import FamilyNode
+import logging
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
 
 @login_required(login_url='/')
 def roots_list(request):
     try:
-        people = FamilyNode.objects.all()
+        people = FamilyNode.objects.filter(user=request.user)
         return render(request, 'core/roots/roots-list.html', {'people': people})
     except Exception as e:
         logger.exception("An error occurred in roots_list view: %s", str(e))
@@ -313,16 +318,12 @@ def roots_list(request):
 def roots_grid(request):
     try:
         # Fetch FamilyNode objects from the database
-        family_nodes = FamilyNode.objects.all()
+        family_nodes = FamilyNode.objects.filter(user=request.user)
         return render(request, 'core/roots/roots-grid.html', {'family_nodes': family_nodes})
     except Exception as e:
         logger.exception("An error occurred in roots_grid view: %s", str(e))
         return render(request, 'core/miscellaneous/404.html')
 
-import logging
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
 
 @csrf_exempt
 def save_root(request, id):
@@ -370,7 +371,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def quiz(request):
     try:
-        questions = Question.objects.all()
+        questions = Question.objects.filter(user=request.user)
         if request.method == 'POST':
             score = 0
             wrong = 0
