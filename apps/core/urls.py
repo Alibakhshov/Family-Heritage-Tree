@@ -30,4 +30,6 @@ urlpatterns = [
     path('roots-grid/', views.roots_grid, name='roots_grid'),
     path('save-roots/<custom_id:id>/', views.save_root, name='save_root'),
     path('quiz/', views.quiz, name='quiz'),
+    path('add-question/', views.add_question, name='add_question'),
+    path('delete-question/<int:question_id>/', views.delete_question, name='delete_question'),
 ]

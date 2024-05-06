@@ -405,3 +405,37 @@ def quiz(request):
     except Exception as e:
         logger.exception("An error occurred in quiz view: %s", str(e))
         return render(request, 'core/miscellaneous/404.html')
+    
+@login_required
+def add_question(request):
+    if request.method == 'POST':
+        question_text = request.POST.get('question_text')
+        option_one = request.POST.get('option_one')
+        option_two = request.POST.get('option_two')
+        option_three = request.POST.get('option_three')
+        option_four = request.POST.get('option_four')
+        correct_answer = request.POST.get('correct_answer')
+
+        question = Question(
+            user=request.user,
+            question_text=question_text,
+            option_one=option_one,
+            option_two=option_two,
+            option_three=option_three,
+            option_four=option_four,
+            correct_answer=correct_answer,
+        )
+        question.save()
+        return redirect('quiz')  
+
+    return render(request, 'core/quiz/add_question.html')
+
+@login_required(login_url='/')
+def delete_question(request, question_id):
+    try:
+        question = Question.objects.get(pk=question_id)
+        question.delete()
+        return redirect('quiz')
+    except Exception as e:
+        logger.exception("An error occurred in delete_question view: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')

@@ -1,0 +1,58 @@
+<!-- Button to Open the Modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addQuestionModal">
+    Add New Question
+</button>
+
+<!-- Add Question Modal -->
+<div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addQuestionModalLabel">Add New Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="addQuestionForm" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Form Group -->
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="question_text">Question Text</label>
+                        <input type="text" id="question_text" name="question_text" class="form-control pl-1" placeholder="Enter the question" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="option_one">Option 1</label>
+                        <input type="text" id="option_one" name="option_one" class="form-control pl-1" placeholder="Option 1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="option_two">Option 2</label>
+                        <input type="text" id="option_two" name="option_two" class="form-control pl-1" placeholder="Option 2" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="option_three">Option 3</label>
+                        <input type="text" id="option_three" name="option_three" class="form-control pl-1" placeholder="Option 3" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="option_four">Option 4</label>
+                        <input type="text" id="option_four" name="option_four" class="form-control pl-1" placeholder="Option 4" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="font-14 bold mb-2" for="correct_answer">Correct Answer</label>
+                        <input type="text" id="correct_answer" name="correct_answer" class="form-control pl-1" placeholder="Correct Answer" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save Question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
