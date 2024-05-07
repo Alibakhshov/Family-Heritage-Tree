@@ -64,6 +64,13 @@
                 <span>Knowledge check</span>
             </a>
         </li>
+        <li {% if request.path == '/recommendation/' %}class="active"{% endif %}>
+            <a href="{% url 'recommendation' %}">
+                <i class="icofont-sourcetree"></i>
+                <span>Recommendation</span>
+            </a>
+        </li>
+
 
      
         <li>

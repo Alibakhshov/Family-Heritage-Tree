@@ -439,3 +439,14 @@ def delete_question(request, question_id):
     except Exception as e:
         logger.exception("An error occurred in delete_question view: %s", str(e))
         return render(request, 'core/miscellaneous/404.html')
+    
+#################################################### COMING SOON #############################################
+
+@login_required(login_url='/')
+def recommendation(request):
+    try:
+
+        return render(request, 'core/miscellaneous/comming-soon.html')
+    except Exception as e:
+        logger.exception("An error occurred in recommendation view: %s", str(e))
+        return render(request, 'core/miscellaneous/404.html')

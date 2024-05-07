@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>RootsLink | 404 page</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/logo (ai).png' %}">
+
+    <!-- Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/icofont/icofont.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.css' %}">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- ======= END MAIN STYLES ======= -->
+</head>
+
+<body>
+    <div class="mn-vh-100 d-flex align-items-center mx-1350">
+        <div class="container-fluid">
+            <!-- Card -->
+            <div class="card justify-content-center py-5 px-4">
+                <div class="row justify-content-center my-5 pt-4">
+                    <div class="col-xl-12 text-center">
+                        <h1 class="mb-30">Coming Soon!!</h1>
+                        <img src="{% static 'img/miscellaneous/coming-soon.png' %}" alt="">
+                        <div class="pt-5 mt-2">
+                            <a href="{% url 'about' %}" class="details-btn">
+                                Back To Home
+                                <img src="{% static 'img/svg/left-arrow-c2.svg' %}" alt="" class="svg">
+                            </a>
+                        </div>
+                    </div>                                   
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'core/partials/footer.html' %}
+    <!-- End Footer -->
+
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+</body>
+</html>
