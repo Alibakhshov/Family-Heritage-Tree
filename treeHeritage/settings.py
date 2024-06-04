@@ -57,11 +57,11 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['family-heritage-tree.onrender.com', 'kooh.online', 'www.kooh.online', 'https://family-heritage-tree-production.up.railway.app/', 'family-heritage-tree-production.up.railway.app', 'www.family-heritage-tree-production.up.railway.app', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 #  CSRF trusted origins
-CSRF_TRUSTED_ORIGINS = ['https://family-heritage-tree.onrender.com', 'https://kooh.online', 'https://www.kooh.online', 'https://family-heritage-tree-production.up.railway.app/', 'https://family-heritage-tree-production.up.railway.app', 'https://www.family-heritage-tree-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['*']
 
 # Application definition
 
