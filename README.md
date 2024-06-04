@@ -130,12 +130,3 @@ For common issues:
 - Ensure all dependencies are installed as per the `requirements.txt`.
 - Check the Django server logs for any error messages.
 
-## Contributors
-
-List of developers and contributors:
-- [Project Manager](https://github.com/ZakirHMuradi)
-- [UI-UX-Designer](https://github.com/aishauca)
-- [Backend Developer](https://github.com/Alibakhshov)
-- [Frontend Developer](https://github.com/Umidbek25)
-- [Data Engineer](https://github.com/oizhamal)
-- [DevOps](https://github.com/ilkhom19)
